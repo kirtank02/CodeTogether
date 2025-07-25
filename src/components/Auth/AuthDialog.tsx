@@ -175,7 +175,7 @@
 //         };
 //       case "sign-up":
 //         return {
-//           title: "Join CodeConnect",
+//           title: "Join CodeTogether",
 //           subtitle: "Create an account to start collaborating",
 //           buttonText: "Create Account"
 //         };
@@ -813,7 +813,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
         }
       case "sign-up":
         return {
-          title: "Join CodeConnect",
+          title: "Join CodeTogether",
           subtitle: "Create an account to start collaborating",
           buttonText: "Create Account",
         }
@@ -1418,7 +1418,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
                           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                           <div className="w-3 h-3 rounded-full bg-green-500"></div>
                         </div>
-                        {/* <div className="text-xs text-gray-400">~/codeconnect/project</div> */}
+                        {/* <div className="text-xs text-gray-400">~/codetogether/project</div> */}
                         <div className="w-4"></div>
                       </div>
 
@@ -1437,7 +1437,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
                             transition={{ delay: 0.6, duration: 1.5 }}
                             className="overflow-hidden whitespace-nowrap"
                           >
-                            npm create codeconnect-app
+                            npm create codetogether-app
                           </motion.span>
                         </motion.div>
 
@@ -1447,7 +1447,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
                           transition={{ delay: 2.2, duration: 0.5 }}
                           className="text-gray-300 ml-4 mb-2"
                         >
-                          <p>✓ Creating a new CodeConnect project...</p>
+                          <p>✓ Creating a new CodeTogether project...</p>
                           <p>✓ Installing dependencies...</p>
                           <p>✓ Setting up development environment...</p>
                           <p className="text-green-400">✓ Success! Project ready.</p>
@@ -1466,7 +1466,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
                             transition={{ delay: 3.1, duration: 1.2 }}
                             className="overflow-hidden whitespace-nowrap"
                           >
-                            cd codeconnect-app && npm run dev
+                            cd codetogether-app && npm run dev
                           </motion.span>
                         </motion.div>
 
@@ -1794,7 +1794,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
 //         }
 //       case "sign-up":
 //         return {
-//           title: "Join CodeConnect",
+//           title: "Join CodeTogether",
 //           subtitle: "Create an account to start collaborating",
 //           buttonText: "Create Account",
 //         }
@@ -1939,7 +1939,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
 //                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
 //                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
 //                   </div>
-//                   <div className="text-xs text-gray-400">~/codeconnect/project</div>
+//                   <div className="text-xs text-gray-400">~/codetogether/project</div>
 //                   <div className="w-4"></div>
 //                 </div>
 
@@ -1958,7 +1958,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
 //                       transition={{ delay: 0.6, duration: 1.5 }}
 //                       className="overflow-hidden whitespace-nowrap"
 //                     >
-//                       npm create codeconnect-app
+//                       npm create codetogether-app
 //                     </motion.span>
 //                   </motion.div>
 
@@ -1968,7 +1968,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
 //                     transition={{ delay: 2.2, duration: 0.5 }}
 //                     className="text-gray-300 ml-4 mb-2"
 //                   >
-//                     <p>✓ Creating a new CodeConnect project...</p>
+//                     <p>✓ Creating a new CodeTogether project...</p>
 //                     <p>✓ Installing dependencies...</p>
 //                     <p>✓ Setting up development environment...</p>
 //                     <p className="text-green-400">✓ Success! Project ready.</p>
@@ -1987,7 +1987,7 @@ export default function AuthPage({ onSuccessfulAuth }: AuthPageProps) {
 //                       transition={{ delay: 3.1, duration: 1.2 }}
 //                       className="overflow-hidden whitespace-nowrap"
 //                     >
-//                       cd codeconnect-app && npm run dev
+//                       cd codetogether-app && npm run dev
 //                     </motion.span>
 //                   </motion.div>
 

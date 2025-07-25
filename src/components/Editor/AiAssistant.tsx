@@ -219,7 +219,7 @@ const openai = new OpenAI({
   apiKey: "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",
   defaultHeaders: {
     "HTTP-Referer": "",
-    "X-Title": "CodeConnect",
+            "X-Title": "CodeTogether",
   },
 })
 

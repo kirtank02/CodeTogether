@@ -3,7 +3,7 @@ import { useUser } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
-import CodeConnect from './landing'
+import CodeTogether from './landing'
 import UserProfile from '@/components/Dashboard/UserProfile'
 import {
   Navbar,
@@ -108,7 +108,7 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="min-h-screen">
-        <CodeConnect />
+        <CodeTogether />
       </div>
     </>
   )

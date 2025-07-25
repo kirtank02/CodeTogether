@@ -580,7 +580,7 @@ export const MobileNavToggle = ({
 //             repeatType: "reverse",
 //           }} 
 //         > 
-//           CodeConnect 
+//           CodeTogether 
 //         </motion.span>
 //       </div>
 
@@ -733,7 +733,7 @@ export const NavbarLogo = ({ visible }: { visible?: boolean }) => {
             scale: { duration: 0.2 },
           }}
         >
-          CodeConnect
+          CodeTogether
         </motion.span>
       </motion.div>
     </motion.a>
