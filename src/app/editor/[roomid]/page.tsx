@@ -1,6 +1,6 @@
 "use client"
 import { useState, useRef, useEffect, useMemo, Suspense } from "react"
-import { motion, AnimatePresence, useAnimation } from "framer-motion"
+import { motion, AnimatePresence, useAnimation, Variants } from "framer-motion"
 import { toast, Toaster } from "sonner"
 import { useParams, useSearchParams } from "next/navigation"
 import { ACTIONS } from "@/lib/actions"
@@ -210,7 +210,7 @@ function EditorPageContent() {
   }, []);
 
   // Memoized variants
-  const pageVariants = useMemo(
+  const pageVariants: Variants = useMemo(
     () => ({
       hidden: { opacity: 0, scale: 0.9 },
       visible: {
@@ -218,7 +218,6 @@ function EditorPageContent() {
         scale: 1,
         transition: {
           duration: 0.5,
-          ease: "easeInOut", // <-- Use a string
           staggerChildren: 0.1,
         },
       },
@@ -226,13 +225,13 @@ function EditorPageContent() {
     [],
   )
 
-  const itemVariants = useMemo(
+  const itemVariants: Variants = useMemo(
     () => ({
       hidden: { y: 20, opacity: 0 },
       visible: {
         y: 0,
         opacity: 1,
-        transition: { duration: 0.5, ease: "easeOut" },
+        transition: { duration: 0.5 },
       },
     }),
     [],
@@ -497,7 +496,7 @@ function EditorPageContent() {
           className="flex flex-col items-center space-y-8 p-12 backdrop-blur-lg rounded-3xl shadow-2xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
           variants={pageVariants}
         >
           <motion.h2
