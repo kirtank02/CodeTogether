@@ -43,8 +43,8 @@ const EnhancedCursor = dynamic(
   { ssr: false }
 );
 
-const WhyCodeConnect = dynamic(
-  () => import('@/components/Dashboard/cards/WhyCodeConnect'),
+const WhyCodeTogether = dynamic(
+() => import('@/components/Dashboard/cards/WhyCodeTogether'),
   {
     loading: () => (
       <div className="w-full h-96 animate-pulse bg-gray-800/50 rounded-xl">
@@ -55,7 +55,7 @@ const WhyCodeConnect = dynamic(
   }
 )
 
-const CodeConnectSlider = lazy(() => import('@/components/Dashboard/Slider'));
+const CodeTogetherSlider = lazy(() => import('@/components/Dashboard/Slider'));
 
 const MoreUseCases = dynamic(
   () => import('@/components/Dashboard/cards/MoreUseCases'),
@@ -97,7 +97,7 @@ const FAQSection = dynamic(
   }
 )
 
-export default function CodeConnect() {
+export default function CodeTogether() {
   const [roomId, setRoomId] = useState("")
   const [username, setUsername] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -198,7 +198,7 @@ export default function CodeConnect() {
                         with{" "}
                         <motion.span
                           className="bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text"                        >
-                          CodeConnect
+                          CodeTogether
                         </motion.span>
                       </motion.h1>
                       <motion.p
@@ -420,7 +420,7 @@ export default function CodeConnect() {
             </RevealAnimation>
 
             <RevealAnimation>
-              <WhyCodeConnect />
+              <WhyCodeTogether />
             </RevealAnimation>
 
             <RevealAnimation>
@@ -433,11 +433,11 @@ export default function CodeConnect() {
 
 
             <RevealAnimation>
-              <CodeConnectSlider />
+              <CodeTogetherSlider />
             </RevealAnimation>
 
             <footer className="mt-32 mb-20 text-center text-sm text-slate-400">
-              <p>© 2023 CodeConnect. All rights reserved.</p>
+                              <p>© 2023 CodeTogether. All rights reserved.</p>
               <p className="mt-2">
                 Built with love by{" "}
                 <a

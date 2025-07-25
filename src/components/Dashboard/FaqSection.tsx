@@ -35,10 +35,10 @@ const itemVariants: Variants = {
 const faqData = [
   {
     question: "Do I need to install anything first?",
-    answer: "No, CodeConnect runs entirely in your browser. No installation required!",
+    answer: "No, CodeTogether runs entirely in your browser. No installation required!",
   },
   {
-    question: "What programming languages does CodeConnect support?",
+    question: "What programming languages does CodeTogether support?",
     answer: "We currently support JavaScript, Python, Java, and C++ with full syntax highlighting and error checking.",
   },
   {

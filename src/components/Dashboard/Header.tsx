@@ -140,7 +140,7 @@ const Header = () => {
             repeatType: "reverse",
           }}
         >
-          CodeConnect
+          CodeTogether
         </motion.span>
       </motion.div>
       

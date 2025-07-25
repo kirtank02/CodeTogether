@@ -11,13 +11,13 @@ import { useAnimation } from "framer-motion"
 import { HTMLMotionProps } from "framer-motion";
 import { HoverCard } from "./HoverCard"
 
-export default function WhyCodeConnect() { 
+export default function WhyCodeTogether() { 
     return (
-        <motion.section id="why-codeconnect" className="mt-32 p-4">
-        <h2 className="text-4xl font-bold text-center mb-16">Why CodeConnect?</h2>
+        <motion.section id="why-codetogether" className="mt-32 p-4">
+        <h2 className="text-4xl font-bold text-center mb-16">Why CodeTogether?</h2>
         <div className="max-w-4xl mx-auto bg-slate-800/50 backdrop-blur-xl rounded-2xl p-8 shadow-2xl shadow-cyan-500/10">
           <p className="text-lg text-slate-300 mb-6">
-            CodeConnect is built for developers, by developers. Whether you're working remotely, teaching, or
+            CodeTogether is built for developers, by developers. Whether you're working remotely, teaching, or
             conducting interviews, our platform enables smoother, faster, and more interactive coding sessions. We
             remove the friction from pair programming by ensuring low latency, secure connections, and real-time
             updates, making remote collaboration as effective as in-person coding.

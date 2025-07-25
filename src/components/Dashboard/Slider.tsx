@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 
 const phrases = ["Code Together", "Build Faster", "Ship Better", "Scale Higher", "Dream Bigger"]
 
-export const CodeConnectSlider = () => {
+export const CodeTogetherSlider = () => {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -96,4 +96,4 @@ export const CodeConnectSlider = () => {
   )
 }
 
-export default CodeConnectSlider
+export default CodeTogetherSlider
