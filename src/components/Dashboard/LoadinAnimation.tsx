@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, memo, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 interface ModernLoaderProps {
   onComplete?: () => void;
@@ -109,14 +109,14 @@ export const ModernLoader: React.FC<ModernLoaderProps> = memo(
     );
 
     // Entrance animation variants
-    const containerVariants = {
+    const containerVariants: Variants = {
       hidden: { y: 50, opacity: 0 },
       visible: { 
         y: 0, 
         opacity: 1,
         transition: { 
           duration: 0.8,
-          ease: "easeOut", // Using predefined easing function
+          type: "tween"
         }
       },
       exit: { 
