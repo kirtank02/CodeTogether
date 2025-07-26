@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Collaborative Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .editor-section {
+            margin-bottom: 20px;
+        }
+        
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status.connected {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .users-list {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            min-height: 30px;
+        }
+        
+        .user-indicator {
+            display: inline-block;
+            padding: 2px 8px;
+            margin: 2px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .conflict-log {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .conflict-entry {
+            font-family: monospace;
+            font-size: 12px;
+            margin: 2px 0;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+        
+        .conflict-entry.resolved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .conflict-entry.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+        
+        .instructions ul {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Real-Time Collaborative Editor with Conflict Resolution</h1>
+        
+        <div class="instructions">
+            <h3>How to Test Conflict Resolution:</h3>
+            <ul>
+                <li>Open this page in multiple browser tabs/windows</li>
+                <li>Type simultaneously at the same position to see conflict resolution</li>
+                <li>Watch the conflict log below to see how conflicts are handled</li>
+                <li>Try inserting, deleting, and replacing text concurrently</li>
+                <li>Notice how cursor positions are maintained and transformed</li>
+            </ul>
+        </div>
+        
+        <div class="editor-section">
+            <div class="editor-header">
+                <h3>Collaborative Text Editor</h3>
+                <div class="status" id="connection-status">Connecting...</div>
+            </div>
+            
+            <div class="users-list" id="users-list">
+                <strong>Active Users:</strong> <span id="user-count">0</span>
+            </div>
+            
+            <textarea id="editor" placeholder="Start typing... Multiple users can edit simultaneously!">Welcome to the collaborative editor!
+
+Try these conflict scenarios:
+1. Have two users type at the same location
+2. One user deletes while another edits the same text
+3. Multiple users making rapid changes
+
+The system will automatically resolve conflicts using Operational Transformation.</textarea>
+        </div>
+        
+        <div class="conflict-log">
+            <h4>Conflict Resolution Log:</h4>
+            <div id="conflict-entries">
+                <div class="conflict-entry">System initialized - Ready for collaboration</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Socket.IO Client -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <script>
+        // Enhanced collaborative editor with conflict visualization
+        class CollaborativeEditorDemo extends CollaborativeEditor {
+            constructor(documentId, textareaElement) {
+                super(documentId, textareaElement);
+                this.setupDemoFeatures();
+            }
+            
+            setupDemoFeatures() {
+                this.updateConnectionStatus('connected');
+                this.logConflict('Connected to collaboration server', 'resolved');
+                
+                // Override conflict resolution to add logging
+                const originalResolveConflicts = this.constructor.prototype.applyRemoteOperation;
+                this.applyRemoteOperation = (operation) => {
+                    this.logConflict(`Applying remote operation: ${operation.type} at position ${operation.position}`, 'resolved');
+                    return originalResolveConflicts.call(this, operation);
+                };
+                
+                // Override send operation to add logging
+                const originalSendOperation = this.sendOperation;
+                this.sendOperation = (operation) => {
+                    this.logConflict(`Sending operation: ${operation.type} at position ${operation.position}`, 'warning');
+                    return originalSendOperation.call(this, operation);
+                };
+            }
+            
+            updateConnectionStatus(status) {
+                const statusEl = document.getElementById('connection-status');
+                statusEl.textContent = status === 'connected' ? 'Connected' : 'Disconnected';
+                statusEl.className = 'status ' + status;
+            }
+            
+            logConflict(message, type = 'resolved') {
+                const entriesEl = document.getElementById('conflict-entries');
+                const entry = document.createElement('div');
+                entry.className = `conflict-entry ${type}`;
+                entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+                
+                entriesEl.appendChild(entry);
+                entriesEl.scrollTop = entriesEl.scrollHeight;
+                
+                // Keep only last 50 entries
+                while (entriesEl.children.length > 50) {
+                    entriesEl.removeChild(entriesEl.firstChild);
+                }
+            }
+            
+            showUserIndicator(userId, action) {
+                super.showUserIndicator(userId, action);
+                
+                // Update users list
+                const usersList = document.getElementById('users-list');
+                const userCount = document.getElementById('user-count');
+                
+                if (action === 'joined') {
+                    const indicator = document.createElement('span');
+                    indicator.className = 'user-indicator';
+                    indicator.style.backgroundColor = this.getUserColor(userId);
+                    indicator.textContent = userId.substring(0, 6);
+                    indicator.id = `user-${userId}`;
+                    usersList.appendChild(indicator);
+                    
+                    this.logConflict(`User ${userId.substring(0, 8)} joined the session`, 'resolved');
+                }
+                
+                userCount.textContent = this.remoteUsers.size + 1; // +1 for current user
+            }
+            
+            removeUserIndicator(userId) {
+                super.removeUserIndicator(userId);
+                
+                const indicator = document.getElementById(`user-${userId}`);
+                if (indicator) {
+                    indicator.remove();
+                }
+                
+                const userCount = document.getElementById('user-count');
+                userCount.textContent = this.remoteUsers.size + 1;
+                
+                this.logConflict(`User ${userId.substring(0, 8)} left the session`, 'resolved');
+            }
+        }
+        
+        // Initialize the demo when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.getElementById('editor');
+            const documentId = 'demo-document-' + Math.random().toString(36).substr(2, 5);
+            
+            if (textarea) {
+                const editor = new CollaborativeEditorDemo(documentId, textarea);
+                window.collaborativeEditor = editor;
+                
+                // Add conflict simulation buttons
+                const conflictControls = document.createElement('div');
+                conflictControls.innerHTML = `
+                    <div style="margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                        <h4>Conflict Simulation:</h4>
+                        <button onclick="simulateConflict('insert')">Simulate Insert Conflict</button>
+                        <button onclick="simulateConflict('delete')">Simulate Delete Conflict</button>
+                        <button onclick="simulateConflict('rapid')">Simulate Rapid Changes</button>
+                        <button onclick="window.collaborativeEditor.getOperationHistory()">View History</button>
+                    </div>
+                `;
+                
+                textarea.parentNode.insertBefore(conflictControls, textarea.nextSibling);
+            }
+        });
+        
+        // Conflict simulation functions
+        function simulateConflict(type) {
+            const editor = window.collaborativeEditor;
+            const textarea = editor.textarea;
+            
+            switch (type) {
+                case 'insert':
+                    // Simulate inserting at position 0
+                    const currentPos = textarea.selectionStart;
+                    textarea.setSelectionRange(0, 0);
+                    document.execCommand('insertText', false, '[SIMULATED] ');
+                    textarea.setSelectionRange(currentPos + 12, currentPos + 12);
+                    editor.logConflict('Simulated insert conflict at position 0', 'warning');
+                    break;
+                    
+                case 'delete':
+                    // Simulate deleting some text
+                    if (textarea.value.length > 10) {
+                        textarea.setSelectionRange(0, 10);
+                        document.execCommand('delete');
+                        editor.logConflict('Simulated delete conflict (removed first 10 chars)', 'warning');
+                    }
+                    break;
+                    
+                case 'rapid':
+                    // Simulate rapid changes
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        const pos = Math.floor(Math.random() * textarea.value.length);
+                        textarea.setSelectionRange(pos, pos);
+                        document.execCommand('insertText', false, `${count}`);
+                        
+                        editor.logConflict(`Rapid change ${count} at position ${pos}`, 'warning');
+                        
+                        if (++count >= 5) {
+                            clearInterval(interval);
+                        }
+                    }, 200);
+                    break;
+            }
+        }
+        
+        // Handle connection events
+        window.addEventListener('beforeunload', () => {
+            if (window.collaborativeEditor) {
+                window.collaborativeEditor.socket.disconnect();
+            }
+        });
+        
+        // Socket connection monitoring
+        if (typeof io !== 'undefined') {
+            const socket = io();
+            
+            socket.on('connect', () => {
+                document.getElementById('connection-status').textContent = 'Connected';
+                document.getElementById('connection-status').className = 'status connected';
+            });
+            
+            socket.on('disconnect', () => {
+                document.getElementById('connection-status').textContent = 'Disconnected';
+                document.getElementById('connection-status').className = 'status disconnected';
+            });
+        }
+    </script>
+    
+    <!-- Include the client-side collaborative editor -->
+    <script src="client-collaborative-editor.js"></script>
+</body>
+</html>
