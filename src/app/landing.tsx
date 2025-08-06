@@ -441,10 +441,10 @@ export default function CodeTogether() {
               <p className="mt-2">
                 Built with love by{" "}
                 <a
-                  href={"http://github.com/dhaval079"}
+                  href={"https://github.com/kirtank02"}
                   className="text-cyan-400 hover:text-cyan-300 transition-colors relative group inline-block"
                 >
-                  @Dhaval Rupapara
+                  @Kirtan Kachhadiya
                   <span className="absolute bottom-0 left-0 w-0 h-px bg-cyan-300 transition-all duration-300 ease-out group-hover:w-full" />
                 </a>
               </p>
